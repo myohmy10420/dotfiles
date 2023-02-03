@@ -1,0 +1,229 @@
+let g:python_host_prog = $HOME . '/.asdf/installs/python/2.7.18/bin/python'
+let g:python3_host_prog = $HOME . '/.asdf/installs/python/3.6.9/bin/python'
+let g:ruby_host_prog = $HOME . '/.asdf/installs/ruby/2.7.0/bin/ruby'
+
+"  載入Plugin 
+"===========================================
+" Vundle, plugins 在 ~/.vim/bundle
+"===========================================
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim' " nvim 需要有這行
+Plugin 'airblade/vim-gitgutter'
+Plugin 'christoomey/vim-tmux-navigator' " 搭配 .tmux.conf 支援 vim switch to other tmux window
+Plugin 'junegunn/vim-easy-align' " 指定某個字元自動對齊
+Plugin 'kassio/neoterm' " 快速開 split terminal, C-D 殺掉 terminal
+" Plugin 'tpope/vim-dispatch' " 快速開 quickfix 和一些功能，但 rspec hightlight 很奇怪不喜歡
+Plugin 'kristijanhusak/vim-dadbod-ui' " dependency tpope/vim-dadbod, 支援 UI 介面
+Plugin 'mg979/vim-visual-multi' " ctrl n 跟 vscode crtl d 一樣效果
+Plugin 'morhetz/gruvbox' " theme
+Plugin 'nathanaelkane/vim-indent-guides' " 辨識縮排
+Plugin 'preservim/nerdtree'
+Plugin 'tomtom/tcomment_vim' " gc comment
+Plugin 'tpope/vim-dadbod' " database 用
+Plugin 'tpope/vim-fugitive' " github plugin
+Plugin 'tpope/vim-rails' " 有:A, gf 等指令可以用
+Plugin 'tpope/vim-surround' " c = change, d = delete, y = add, 後面 + s(surround) 開始使用
+Plugin 'vim-airline/vim-airline' " 加強下方 statusline 和上方 tabline
+" Plugin 'vim-test/vim-test' " 可以快速執行專案測試
+" Plugin 'ycm-core/YouCompleteMe'
+Plugin 'thoughtbot/vim-rspec'
+
+Plugin 'ctrlpvim/ctrlp.vim' " 收尋檔案 C-p
+Plugin 'nvim-lua/plenary.nvim'
+Plugin 'nvim-telescope/telescope.nvim'
+Plugin 'simeji/winresizer' " window quick resize
+
+call vundle#end()
+filetype plugin indent on
+
+
+" 漣Setting 漣
+let mapleader="," " 設定 leader key
+
+" set wrap " 字數過長時換行。
+set linebreak " 換行時不會切斷單字
+set hidden " switch buffer without save
+set list listchars=trail:· " tab 和空白顯示的標誌
+set autoindent " 自動縮排
+set wildchar=<Tab> wildmenu wildmode=full
+set number " 顯示行號
+set noswapfile " disable .swp files creation in vim
+set showtabline=2
+let tabMinWidth = 0 " 最小分頁寬度（0: 不限）
+let tabMaxWidth = 40 " 最大分頁寬度（0: 不限）
+let tabMinWidthResized = 15 " 設定 tabDivideEquel 有效時，採用的最小分頁寬度
+let tabScrollOff = 5 " 目前分頁左右至少顯示幾個分頁
+let tabEllipsis = '…' " 分頁過長而被截短時，要顯示的替代文字
+let tabDivideEquel = 0 " 分頁總長超出畫面時，是否自動均分各分頁寬度
+
+
+"===========================================
+" Short Cut
+"===========================================
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+cnoremap <C-h> <Left>
+cnoremap <C-j> <Down>
+cnoremap <C-k> <Up>
+cnoremap <C-l> <Right>
+
+inoremap <leader>, <ESC>
+nnoremap <leader>e :e<space>
+nnoremap <leader>c :
+nnoremap <leader>ag<space> :!rg<space>
+nnoremap <leader>agf "ayiw:T rg<space><c-r>a<space>
+nnoremap <leader>agd "ayiw:!rg<space>'def<space><c-r>a'<space>
+
+" ripgrep
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fw <cmd>Telescope grep_string<CR>
+nnoremap <leader>fs <cmd>Telescope git_status<CR>
+vnoremap <leader>f y/\V<C-R>=escape(@",'/\')<CR><CR> " find select 的東西
+vnoremap <leader>c "+y " copy select 的東西到剪貼簿
+nnoremap <leader>d :bp<CR>:bd #<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+map <leader>s :sp<CR>
+map <leader>v :vs<CR>
+
+autocmd FileType ruby nnoremap <leader>p obinding.pry<Esc>
+autocmd FileType clojure nnoremap <leader>p o(println<Esc>
+autocmd BufEnter,BufNew *.cljs nnoremap <leader>p o(js/console.log<Esc>
+
+
+"===========================================
+" Tab <Tab> 相關
+"===========================================
+set shiftwidth=2 " tab 和 delete 一次增加或刪除2個空白
+set expandtab "tab 變空白
+nnoremap <silent> <tab> :bn<cr>
+nnoremap <silent> <s-tab> :bp<cr>
+
+
+"===========================================
+" NERDTreeFind 相關
+"===========================================
+" nnoremap <leader>f :NERDTreeFind<CR>
+nnoremap <leader>n :NERDTreeFind<CR>
+let NERDTreeQuitOnOpen=1 " 打開檔案後關閉 Nerdtree
+let NERDTreeShowHidden=1 " 隱藏檔案也看得到, 例如 .gitignore
+let g:airline#extensions#tabline#enabled = 1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+
+" Open a NERDTree automatically when vim starts up if no files were specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" 跟tmux nevigation 有 conflict
+let g:NERDTreeMapJumpNextSibling=""
+let g:NERDTreeMapJumpPrevSibling=""
+
+
+"===========================================
+" vim-gitgutter 相關
+"===========================================
+set updatetime=100 " default 4000 是 4 秒才更新
+nmap <leader>gn <Plug>(GitGutterNextHunk)
+nmap <leader>gb <Plug>(GitGutterPrevHunk)
+
+
+"===========================================
+" ale 相關
+"===========================================
+let g:ale_sign_column_always = 1
+
+
+"===========================================
+" vim-easy-align 相關
+"===========================================
+vmap <Enter> <Plug>(EasyAlign)
+
+
+"  Color 相關 
+let g:gruvbox_italic=1
+colorscheme gruvbox
+
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
+
+"===========================================
+" indent_guides 相關
+"===========================================
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 0
+" hi IndentGuidesOdd  guibg=#484848 ctermbg=484848
+" hi IndentGuidesEven guibg=#6d6d6d ctermbg=6d6d6d
+
+
+"===========================================
+" vim-test 相關
+"===========================================
+" these 'Ctrl mappings' work well when Caps Lock is mapped to Ctrl
+" nmap <silent> t<C-n> :TestNearest<CR>
+" nmap <silent> t<C-f> :TestFile<CR>
+" nmap <silent> t<C-s> :TestSuite<CR>
+" nmap <silent> t<C-l> :TestLast<CR>
+" nmap <silent> t<C-g> :TestVisit<CR>
+
+" 搭配 neoterm 的設定
+" let test#strategy = 'neoterm'
+let g:neoterm_default_mod = 'botright'
+let g:neoterm_autoscroll = 1
+set nocompatible
+filetype off
+let &runtimepath.=',~/.vim/bundle/neoterm'
+filetype plugin on
+nnoremap <leader>td :Tkill<CR> :Tclose!<CR>
+
+" 可以設定要在 terminal 下指令的起手式的快捷鍵, 像 leader key 的概念
+" tnoremap <Esc> <C-\><C-n>
+
+" switch back from terminal
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+
+" 支援 rails minitest, 都需要在一個 it block 裡面執行
+" <leader>tj || <leader>tl 針對單個測試
+" <leader>tf 針對整個檔案
+" source ~/.config/nvim/minitest.vim
+
+
+"===========================================
+" vim-dadbod-ui 相關
+"===========================================
+nnoremap <silent> <leader>du :DBUIToggle<CR>
+nnoremap <silent> <leader>df :DBUIFindBuffer<CR>
+nnoremap <silent> <leader>dr :DBUIRenameBuffer<CR>
+nnoremap <silent> <leader>dl :DBUILastQueryInfo<CR>
+
+" RSpec.vim mappings
+map <Leader>tf :call RunCurrentSpecFile()<CR>
+map <Leader>tj :call RunNearestSpec()<CR>
+" map <Leader>tl :call RunLastSpec()<CR>
+map <Leader>ta :call RunAllSpecs()<CR>
+let g:rspec_command = "T rspec {spec}"
+" let g:rspec_command = "Dispatch rspec {spec}" " for 'tpope/vim-dispatch'
