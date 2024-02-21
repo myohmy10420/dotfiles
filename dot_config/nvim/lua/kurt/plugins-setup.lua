@@ -69,6 +69,11 @@ return packer.startup(function(use)
   use({"glepnir/lspsaga.nvim", branch = "main" })
   use("onsails/lspkind.nvim")
 
+  -- solargraph 官網說要安裝 languageclient-neovim
+  -- use({"autozimu/languageclient-neovim", branch = "next", run = "bash install.sh"})
+  -- cd ~/.local/share/nvim/site/pack/packer/start/languageclient-neovim 自己跑 bash install.sh ，不然會 timeout
+  use({"autozimu/languageclient-neovim", branch = "next"})
+
   -- treesitter configuration
   use({
     "nvim-treesitter/nvim-treesitter",
