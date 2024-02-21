@@ -10,6 +10,7 @@ fi
 DEFAULT_USER="Kurt"
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.git.zsh
+source ~/.config/bito.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 alias c='clear'
@@ -25,8 +26,6 @@ tt() {
 export EDITOR='nvim'
 alias vi='nvim'
 
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
-
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
@@ -38,3 +37,8 @@ export NVM_DIR="$HOME/.nvm"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 alias pr='puma-dev -install -d test'
+export PATH="/usr/local/opt/node@14/bin:$PATH"
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+
+export PATH="/usr/local/opt/node@14/bin:$PATH"

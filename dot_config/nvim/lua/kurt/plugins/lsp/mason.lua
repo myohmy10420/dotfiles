@@ -8,6 +8,8 @@ if not mason_lspconfig_status then
   return
 end
 
+mason.setup()
+
 mason_lspconfig.setup({
   -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
   -- This setting has no relation with the `automatic_installation` setting.
@@ -15,9 +17,9 @@ mason_lspconfig.setup({
     "html",
     "cssls",
     "tsserver",
-    "quick_lint_js",
-    "tsserver",
+    -- "quick_lint_js",
     "solargraph",
+    -- "rubocop",
     -- "ruby_ls",
     "sqlls",
     "yamlls",
@@ -32,5 +34,3 @@ mason_lspconfig.setup({
   --       Example: automatic_installation = { exclude = { "rust_analyzer", "solargraph" } }
   automatic_installation = false,
 })
-
-mason.setup()

@@ -16,7 +16,7 @@ local on_attach = function(_, bufnr)
 
   -- set keybinds
   keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts) -- show definition, references
-  keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts) -- got to declaration
+  keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts) -- got to declaration
   keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts) -- see definition and make edits in window
   keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts) -- go to implementation
   keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
@@ -57,31 +57,35 @@ lspconfig["quick_lint_js"].setup({
 })
 
 -- configure ruby server
+-- :lua print(vim.fn.execute("LspInfo")) 可以看 lsp log
 lspconfig["solargraph"].setup({
   capabilities = capabilities,
   -- Lspsaga not support ruby will
+  -- on_attach = on_attach,
   on_attach = function(_, bufnr)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "gm", "<Cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true }) -- 嘗試跳到宣告該 method 的地方
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<Cmd>lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true }) -- 當前專案搜尋選取的 references ，應該是被宣告且可以被調用的 object
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "gsm", "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>", { noremap = true, silent = true }) -- 當前專案模糊搜尋 method
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "gls", "<Cmd>lua vim.lsp.buf.document_symbol()<CR>", { noremap = true, silent = true }) -- 當前檔案列出所有 defined class， module 和 method
+    -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gh", "<Cmd>lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true }) -- 對選取的字顯示一些資訊
 
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local bufopts = { noremap=true, silent=true, buffer=bufnr }
-
-    -- 先 copy 原本 cmp 所有建議設定，一個一個測試後只留下好用或可以用的，很多不支援或不知道效果
-    -- gd 全專案找該 defined method 的地方，大推
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    -- rn 全專案一次更新該 method name，但不知道支援到哪種程度還是要仔細 check
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-    -- gr 全專案找出使用該 class.method 的地方，但不知道支援到哪種程度還是要仔細 check
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+    -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gx", "<Cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true }) -- 當前專案所有檔案修改選取的字，會開啟一堆被修改的檔案且不會先直接存檔
+    -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gx", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", { noremap = true, silent = true }) -- 不知道怎麼用
+    -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gx", "<Cmd>lua vim.lsp.buf.formatting()<CR>", { noremap = true, silent = true }) -- 不知道怎麼用
+    -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gx", "<Cmd>lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true }) -- 不知道怎麼用
   end,
+  settings = {
+    solargraph = {
+      -- raichu 讀取 inherit_gem: rubocop-github 會有問題
+      diagnostics = false,
+      -- bundle exec solargraph
+      -- useBundler = true,
+      -- 禁用加载 Rails 共享配置文件
+      -- loadRbconfig = false,
+    }
+  }
 })
-
--- configure ruby server
--- lspconfig["ruby_ls"].setup({
---   capabilities = capabilities,
---   on_attach = on_attach,
--- })
 
 -- configure sql server
 lspconfig["sqlls"].setup({
@@ -110,7 +114,8 @@ lspconfig["jsonls"].setup({
 -- })
 
 -- configure lua server (with special settings)
-lspconfig["sumneko_lua"].setup({
+-- lspconfig["sumneko_lua"].setup({
+lspconfig["lua_ls"].setup({
   capabilities = capabilities,
   on_attach = on_attach,
   settings = { -- custom settings for lua

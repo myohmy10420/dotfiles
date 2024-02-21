@@ -39,3 +39,10 @@ opt.splitright = true
 opt.splitbelow = true
 
 opt.iskeyword:append("-") -- A-lin 會當作一個字元, dw 會直接刪除
+
+-- nvim-treesitter folding codes
+opt.foldenable = false -- 開檔案是不要自動 folding
+-- opt.foldlevel = 99 -- 不知作用
+-- 一下兩行開啟 folding 設定
+opt.foldmethod = 'expr'
+opt.foldexpr = 'nvim_treesitter#foldexpr()'
