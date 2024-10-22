@@ -14,16 +14,8 @@ mason_lspconfig.setup({
   -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
   -- This setting has no relation with the `automatic_installation` setting.
   ensure_installed = {
-    "html",
-    "cssls",
-    "ts_ls",
-    -- "quick_lint_js",
-    "solargraph",
-    -- "rubocop",
-    -- "ruby_ls",
-    "sqlls",
-    "yamlls",
-    "jsonls"
+    "lua_ls",
+    "rubocop",
   },
   -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
   -- This setting has no relation with the `ensure_installed` setting.
@@ -32,5 +24,25 @@ mason_lspconfig.setup({
   --   - true: All servers set up via lspconfig are automatically installed.
   --   - { exclude: string[] }: All servers set up via lspconfig, except the ones provided in the list, are automatically installed.
   --       Example: automatic_installation = { exclude = { "rust_analyzer", "solargraph" } }
-  automatic_installation = false,
+  -- automatic_installation = false,
+  handlers = {
+    function (server_name)
+      require("lspconfig")[server_name].setup{}
+    end,
+
+    ["lua_ls"] = function ()
+      local lspconfig = require("lspconfig")
+      lspconfig.lua_ls.setup({
+        capabilities = capabilities,
+
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = {'vim'}
+            }
+          }
+        }
+      })
+    end
+  },
 })
