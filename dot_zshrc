@@ -23,24 +23,34 @@ tt() {
   tmux attach -t $(whoami);
 }
 
+tservers() {
+  if ! tmux has-session -t vscode 2> /dev/null; then
+    tmux new -s vscode -d;
+  fi
+  tmux attach -t vscode;
+}
+
+tvscode() {
+  if ! tmux has-session -t vscode 2> /dev/null; then
+    tmux new -s vscode -d;
+  fi
+  tmux attach -t vscode;
+}
+
 export EDITOR='nvim'
 alias vi='nvim'
 
 # enable frum
 eval "$(frum init)"
 
-# export PATH="/usr/local/opt/node@16/bin:$PATH"
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+# [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 alias pr='puma-dev -install -d test'
-export PATH="/usr/local/opt/node@14/bin:$PATH"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
-export PATH="/usr/local/opt/node@14/bin:$PATH"
-
-. /usr/local/opt/asdf/libexec/asdf.sh
+# . /usr/local/opt/asdf/libexec/asdf.sh
