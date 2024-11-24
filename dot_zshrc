@@ -24,10 +24,10 @@ tt() {
 }
 
 tservers() {
-  if ! tmux has-session -t vscode 2> /dev/null; then
-    tmux new -s vscode -d;
+  if ! tmux has-session -t servers 2> /dev/null; then
+    tmux new -s servers -d;
   fi
-  tmux attach -t vscode;
+  tmux attach -t servers;
 }
 
 tvscode() {
@@ -41,7 +41,7 @@ export EDITOR='nvim'
 alias vi='nvim'
 
 # enable frum
-eval "$(frum init)"
+# eval "$(frum init)"
 
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
