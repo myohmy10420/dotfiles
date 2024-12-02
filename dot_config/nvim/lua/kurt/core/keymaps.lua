@@ -6,6 +6,8 @@ local builtin = require('telescope.builtin')
 -- unbind
 keymap.set("n", "K", "<nop>")
 keymap.set("v", "K", "<nop>")
+keymap.set("n", "<C-f>", "<nop>")
+keymap.set("v", "<C-f>", "<nop>")
 
 -- general
 keymap.set("i", "<leader>,", "<Esc>", {desc = ",, can quick quit from i mode"})
@@ -44,14 +46,18 @@ keymap.set("n", "<leader>gd", ":Gvdiffsplit<CR>")
 
 -- search
 keymap.set("n", "<leader>ff", builtin.find_files)
-keymap.set("n", "<leader>fww", builtin.grep_string)
-keymap.set("n", "<leader>fwg", "\"ayiw:Telescope live_grep<CR><c-r>a", {desc = "rg search selected words"})
-keymap.set("v", "<leader>fwg", "\"ay:Telescope live_grep<CR><c-r>a", {desc = "rg search selected words"})
+keymap.set("n", "<leader>fw", builtin.grep_string)
+keymap.set("n", "<leader><C-f><C-w>", "\"ayiw:Telescope live_grep<CR><c-r>a", {desc = "rg search selected words"})
+keymap.set("v", "<leader><C-f><C-w>", "\"ay:Telescope live_grep<CR><c-r>a", {desc = "rg search selected words"})
 keymap.set("n", "<leader>fg", builtin.live_grep)
 keymap.set("n", "<leader>fb", builtin.buffers)
 keymap.set("n", "<leader>fd", builtin.treesitter)
 keymap.set("n", "<leader>fh", builtin.help_tags)
 keymap.set("v", "f", "y\"ayiw/<c-r>a<CR>", {desc = "search selected words"})
+keymap.set("n", "<leader>S", "<cmd>lua require('spectre').toggle()<CR>", { desc = "Toggle Spectre" })
+keymap.set("n", "<leader>sw", "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", { desc = "Search current word" })
+keymap.set("v", "<leader>sw", "<esc><cmd>lua require('spectre').open_visual()<CR>", { desc = "Search current word" })
+keymap.set("n", "<leader>sf", "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>", { desc = "Search on current file" })
 
 -- test
 keymap.set("n", "<leader>tf", "<cmd>call RunCurrentSpecFile()<CR>")

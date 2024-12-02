@@ -27,7 +27,7 @@ end
 return packer.startup(function(use)
   use("wbthomason/packer.nvim")
   -- lua functions that many plugins to use
-  -- telescope require, 載入後 telescope 可以預覽檔案
+  -- telescope require, 載入後 telescope 可以預覽檔案(nvim-spectre also require)
   use("nvim-lua/plenary.nvim")
 
   use("morhetz/gruvbox") --perferred colorscheme
@@ -38,6 +38,7 @@ return packer.startup(function(use)
   use("nvim-tree/nvim-tree.lua") -- file explorer
   use("nvim-lualine/lualine.nvim") -- nvim 也有 statusline
   use("nvim-telescope/telescope.nvim") -- fuzzy finding
+  use("nvim-pack/nvim-spectre") -- 像 vscode 的 search
   use {"akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons"}
   use("lewis6991/gitsigns.nvim") -- git plugin
   use("tpope/vim-fugitive") -- git plugin
