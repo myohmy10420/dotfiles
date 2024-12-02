@@ -23,18 +23,18 @@ tt() {
   tmux attach -t $(whoami);
 }
 
-tservers() {
+ts() {
   if ! tmux has-session -t servers 2> /dev/null; then
     tmux new -s servers -d;
   fi
   tmux attach -t servers;
 }
 
-tvscode() {
-  if ! tmux has-session -t vscode 2> /dev/null; then
-    tmux new -s vscode -d;
+tw() {
+  if ! tmux has-session -t dev 2> /dev/null; then
+    tmux new -s dev -d;
   fi
-  tmux attach -t vscode;
+  tmux attach -t dev;
 }
 
 export EDITOR='nvim'
@@ -54,3 +54,4 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
 # . /usr/local/opt/asdf/libexec/asdf.sh
+eval "$(rbenv init -)"
