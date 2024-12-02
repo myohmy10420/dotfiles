@@ -46,7 +46,7 @@ return packer.startup(function(use)
   -- use("vim-ruby/vim-ruby") -- 基本的 ruby 檔案一些指令, 但都沒有效果, 需研究
   use("tpope/vim-rails") -- 有:A, gf 等指令可以用
   use("kassio/neoterm") -- quick open new terminal, 目前只用來搭配 vim-rspec
-  use("thoughtbot/vim-rspec") -- rspec plugin
+  use("vim-test/vim-test") -- test plugin
   use("simeji/winresizer") -- window quick resize
 
   -- autocompletion

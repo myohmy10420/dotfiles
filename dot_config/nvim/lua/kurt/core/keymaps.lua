@@ -47,8 +47,8 @@ keymap.set("n", "<leader>gd", ":Gvdiffsplit<CR>")
 -- search
 keymap.set("n", "<leader>ff", builtin.find_files)
 keymap.set("n", "<leader>fw", builtin.grep_string)
-keymap.set("n", "<leader><C-f><C-w>", "\"ayiw:Telescope live_grep<CR><c-r>a", {desc = "rg search selected words"})
-keymap.set("v", "<leader><C-f><C-w>", "\"ay:Telescope live_grep<CR><c-r>a", {desc = "rg search selected words"})
+keymap.set("n", "<leader>FW", "\"ayiw:Telescope live_grep<CR><c-r>a", {desc = "rg search selected words"})
+keymap.set("v", "<leader>FW", "\"ay:Telescope live_grep<CR><c-r>a", {desc = "rg search selected words"})
 keymap.set("n", "<leader>fg", builtin.live_grep)
 keymap.set("n", "<leader>fb", builtin.buffers)
 keymap.set("n", "<leader>fd", builtin.treesitter)
@@ -60,10 +60,9 @@ keymap.set("v", "<leader>sw", "<esc><cmd>lua require('spectre').open_visual()<CR
 keymap.set("n", "<leader>sf", "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>", { desc = "Search on current file" })
 
 -- test
-keymap.set("n", "<leader>tf", "<cmd>call RunCurrentSpecFile()<CR>")
-keymap.set("n", "<leader>tj", "<cmd>call RunNearestSpec()<CR>")
-keymap.set("n", "<leader>ta", "<cmd>call RunAllSpecs()<CR>")
-keymap.set("n", "<leader>td", "<cmd>Tkill<CR> :Tclose!<CR>")
+keymap.set("n", "<leader>tf", ":TestFile<CR>")
+keymap.set("n", "<leader>tj", ":TestNearest<CR>")
+keymap.set("n", "<leader>td", ":Tclose<CR>")
 
 -- marks
 keymap.set("n", "<leader>mf", builtin.marks)

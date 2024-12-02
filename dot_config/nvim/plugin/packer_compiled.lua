@@ -224,15 +224,15 @@ _G.packer_plugins = {
     path = "/Users/kurthsu/.local/share/nvim/site/pack/packer/start/vim-rails",
     url = "https://github.com/tpope/vim-rails"
   },
-  ["vim-rspec"] = {
-    loaded = true,
-    path = "/Users/kurthsu/.local/share/nvim/site/pack/packer/start/vim-rspec",
-    url = "https://github.com/thoughtbot/vim-rspec"
-  },
   ["vim-surround"] = {
     loaded = true,
     path = "/Users/kurthsu/.local/share/nvim/site/pack/packer/start/vim-surround",
     url = "https://github.com/tpope/vim-surround"
+  },
+  ["vim-test"] = {
+    loaded = true,
+    path = "/Users/kurthsu/.local/share/nvim/site/pack/packer/start/vim-test",
+    url = "https://github.com/vim-test/vim-test"
   },
   ["vim-tmux-navigator"] = {
     loaded = true,
