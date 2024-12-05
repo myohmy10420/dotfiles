@@ -60,9 +60,21 @@ keymap.set("v", "<leader>sw", "<esc><cmd>lua require('spectre').open_visual()<CR
 keymap.set("n", "<leader>sf", "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>", { desc = "Search on current file" })
 
 -- test
-keymap.set("n", "<leader>tf", ":TestFile<CR>")
-keymap.set("n", "<leader>tj", ":TestNearest<CR>")
-keymap.set("n", "<leader>td", ":Tclose<CR>")
+keymap.set("n", "<leader>tj", function()
+  require("neotest").run.run()
+end, { desc = "Run nearest test" })
+
+keymap.set("n", "<leader>tf", function()
+  require("neotest").run.run(vim.fn.expand("%"))
+end, { desc = "Run the current file" })
+
+keymap.set("n", "<leader>to", function()
+  require("neotest").output.open({ enter = true })
+end, { desc = "Open test output" })
+
+-- keymap.set("n", "<leader>ts", function()
+--   require("neotest").summary.toggle()
+-- end, { desc = "Toggle test summary" })
 
 -- marks
 keymap.set("n", "<leader>mf", builtin.marks)

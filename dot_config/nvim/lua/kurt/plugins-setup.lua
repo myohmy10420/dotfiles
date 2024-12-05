@@ -27,8 +27,6 @@ end
 return packer.startup(function(use)
   use("wbthomason/packer.nvim")
   -- lua functions that many plugins to use
-  -- telescope require, 載入後 telescope 可以預覽檔案(nvim-spectre also require)
-  use("nvim-lua/plenary.nvim")
 
   use("morhetz/gruvbox") --perferred colorscheme
   use("christoomey/vim-tmux-navigator") -- 搭配 .tmux.conf 支援 vim switch to other tmux window
@@ -37,8 +35,18 @@ return packer.startup(function(use)
   use("numToStr/Comment.nvim") -- gc = comment
   use("nvim-tree/nvim-tree.lua") -- file explorer
   use("nvim-lualine/lualine.nvim") -- nvim 也有 statusline
-  use("nvim-telescope/telescope.nvim") -- fuzzy finding
-  use("nvim-pack/nvim-spectre") -- 像 vscode 的 search
+  use({
+    "nvim-telescope/telescope.nvim", -- fuzzy finding
+    requires = {
+      "nvim-lua/plenary.nvim"
+    }
+  })
+  use({
+    "nvim-pack/nvim-spectre", -- 像 vscode 的 search
+    requires = {
+      "nvim-lua/plenary.nvim"
+    }
+  })
   use {"akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons"}
   use("lewis6991/gitsigns.nvim") -- git plugin
   use("tpope/vim-fugitive") -- git plugin
@@ -46,7 +54,18 @@ return packer.startup(function(use)
   -- use("vim-ruby/vim-ruby") -- 基本的 ruby 檔案一些指令, 但都沒有效果, 需研究
   use("tpope/vim-rails") -- 有:A, gf 等指令可以用
   use("kassio/neoterm") -- quick open new terminal, 目前只用來搭配 vim-rspec
-  use("vim-test/vim-test") -- test plugin
+  use({
+    "nvim-neotest/neotest",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-neotest/nvim-nio",
+      -- adapters
+      "olimorris/neotest-rspec",
+    }
+  })
+
   use("simeji/winresizer") -- window quick resize
 
   -- autocompletion
