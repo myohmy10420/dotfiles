@@ -76,6 +76,12 @@ end, { desc = "Open test output" })
 --   require("neotest").summary.toggle()
 -- end, { desc = "Toggle test summary" })
 
+-- DB UI
+keymap.set("n", "<leader>du", ":DBUIToggle<CR>", { desc = "Toggle Dadbod UI" })
+-- keymap.set("n", "<leader>df", ":DBUIFindBuffer<CR>", { desc = "Find existing DBUI buffer" })
+-- keymap.set("n", "<leader>dr", ":DBUIRenameBuffer<CR>", { desc = "Rename DBUI buffer" })
+keymap.set("n", "<leader>dl", ":DBUILastQueryInfo<CR>", { desc = "Show last query info" })
+
 -- marks
 keymap.set("n", "<leader>mf", builtin.marks)
 keymap.set("n", "<leader>md", ":delmarks a-zA-Z0-9<CR>")

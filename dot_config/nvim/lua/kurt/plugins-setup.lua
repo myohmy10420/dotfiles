@@ -94,6 +94,14 @@ return packer.startup(function(use)
   -- cd ~/.local/share/nvim/site/pack/packer/start/languageclient-neovim 自己跑 bash install.sh ，不然會 timeout
   use({"autozimu/languageclient-neovim", branch = "next"})
 
+  -- DB
+  use({
+    "tpope/vim-dadbod",
+    requires = {
+      "kristijanhusak/vim-dadbod-ui",
+    },
+  })
+
   -- treesitter configuration
   use({
     "nvim-treesitter/nvim-treesitter",
