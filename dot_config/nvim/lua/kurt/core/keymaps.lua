@@ -64,13 +64,21 @@ keymap.set("n", "<leader>tj", function()
   require("neotest").run.run()
 end, { desc = "Run nearest test" })
 
+keymap.set("n", "<leader>ta", function()
+  require("neotest").run.attach()
+end, { desc = "Attach nearest running test" })
+
+keymap.set("n", "<leader>td", function()
+  require("neotest").run.stop()
+end, { desc = "Stop the nearest test" })
+
 keymap.set("n", "<leader>tf", function()
   require("neotest").run.run(vim.fn.expand("%"))
-end, { desc = "Run the current file" })
+end, { desc = "Run the current file test" })
 
 keymap.set("n", "<leader>to", function()
   require("neotest").output.open({ enter = true })
-end, { desc = "Open test output" })
+end, { desc = "Open test result output" })
 
 -- keymap.set("n", "<leader>ts", function()
 --   require("neotest").summary.toggle()

@@ -18,6 +18,7 @@ neotest.setup({
           "bundle",
           "exec",
           "rspec",
+          "--tty",
         })
       end,
       root_files = { "Gemfile", ".rspec", ".gitignore" },
@@ -29,5 +30,5 @@ neotest.setup({
         return "NeotestFormatter"
       end
     }),
-  }
+  },
 })
