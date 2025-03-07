@@ -23,7 +23,7 @@ keymap.set("c", "<C-k>", "<Up>")
 keymap.set("c", "<C-l>", "<Right>")
 
 keymap.set("n", "<leader>e", ":e<space>")
-keymap.set("n", "<leader>c", ":")
+keymap.set("n", "<leader>cc", ":")
 keymap.set("n", "<leader>d", ":bd<CR>")
 keymap.set("n", "<leader>ww", ":w<CR>")
 keymap.set("n", "<leader>q", ":q<CR>")
@@ -114,3 +114,19 @@ keymap.set("n", "<leader>w\\", "<C-w>v", {desc = "split window vertically"})
 keymap.set("n", "<leader>wd", "<cmd>close<CR>", {desc = "close window"})
 keymap.set("n", "<leader>wm", "<cmd>MaximizerToggle<CR>", {desc = "toggle max window"})
 keymap.set("n", "<leader>we", "<cmd>WinResizerStartResize<CR>", {desc = "quick resize window"})
+
+-- copilot
+keymap.set("i", "<M-Down>", "<Plug>(copilot-next)", {desc = "換下一個建議"})
+keymap.set("i", "<M-Up>", "<Plug>(copilot-previous)", {desc = "換上一個建議"})
+
+-- copilot chat
+keymap.set("n", "<leader>ct", ":CopilotChatToggle<CR>", {desc = "開關 Copilot 聊天面板"})
+keymap.set("v", "<leader>ce", ":CopilotChatExplain<CR>", {desc = "解釋選中的代碼"})
+keymap.set("v", "<leader>cr", ":CopilotChatReview<CR>", {desc = "檢查選中的代碼"})
+keymap.set("v", "<leader>cp", ":CopilotChatPrompts<CR>", {desc = "要對選中的代碼做什麼"})
+
+-- keymap.set("n", "<leader>cp", ":Copilot panel<CR>", { noremap = true, silent = true, desc = "開啟 Copilot 面板" })
+-- keymap.set("n", "<leader>ca", ":Copilot attach<CR>", { noremap = true, silent = true, desc = "附加 Copilot 到 buffer" })
+-- keymap.set("n", "<leader>cd", ":Copilot detach<CR>", { noremap = true, silent = true, desc = "從 buffer 分離 Copilot" })
+-- keymap.set("n", "<leader>ce", ":Copilot enable<CR>", { noremap = true, silent = true, desc = "啟用 Copilot" })
+-- keymap.set("n", "<leader>ct", ":Copilot toggle<CR>", { noremap = true, silent = true, desc = "切換 Copilot 狀態" })

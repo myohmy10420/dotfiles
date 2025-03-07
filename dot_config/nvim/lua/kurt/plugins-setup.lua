@@ -75,9 +75,9 @@ return packer.startup(function(use)
   use("hrsh7th/cmp-cmdline") -- source for command line
 
   -- autocompletion - snippets
-  use("L3MON4D3/LuaSnip") -- Snippets plugin
-  use("saadparwaiz1/cmp_luasnip")  -- Snippets source for nvim-cmp
-  use("rafamadriz/friendly-snippets")
+  use("L3MON4D3/LuaSnip") -- Snippets plugin -- Snippet 系統
+  use("saadparwaiz1/cmp_luasnip")  -- Snippets source for nvim-cmp -- Snippet 補全
+  use("rafamadriz/friendly-snippets")  -- Snippet 資源庫
 
   -- managing & installing lsp server
   use("williamboman/mason.nvim")
@@ -109,6 +109,16 @@ return packer.startup(function(use)
       local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
       ts_update()
     end,
+  })
+
+  -- AI 工具
+  use("github/copilot.vim")
+  use({
+    "CopilotC-Nvim/CopilotChat.nvim",
+    requires = {
+      { "github/copilot.vim" },
+      { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+    },
   })
 
   if packer_bootstrap then
