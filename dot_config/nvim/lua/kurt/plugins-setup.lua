@@ -113,15 +113,27 @@ return packer.startup(function(use)
 
   -- AI 工具
   use("github/copilot.vim")
-  use({
-    "CopilotC-Nvim/CopilotChat.nvim",
+
+  -- Avante.nvim with build process
+  use {
+    "yetone/avante.nvim",
+    branch = "main",
+    run = "make",
     requires = {
-      { "github/copilot.vim" },
-      { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
-    },
-  })
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-lua/plenary.nvim",
+      "stevearc/dressing.nvim",
+      "MunifTanjim/nui.nvim",
+      "MeanderingProgrammer/render-markdown.nvim",
+    }
+  }
+  -- Avante.nvim Optional dependencies
+  -- use "hrsh7th/nvim-cmp"
+  -- use "nvim-tree/nvim-web-devicons" -- or use "echasnovski/mini.icons"
+  -- use "HakonHarnes/img-clip.nvim"
+  -- use "zbirenbaum/copilot.lua"
 
   if packer_bootstrap then
-    require('packer').sync()
+    require("packer").sync()
   end
 end)
