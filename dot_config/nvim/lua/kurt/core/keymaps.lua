@@ -1,7 +1,7 @@
 vim.g.mapleader = ","
 
 local keymap = vim.keymap -- for conciseness
-local builtin = require('telescope.builtin')
+local builtin = require("telescope.builtin")
 
 -- unbind
 keymap.set("n", "K", "<nop>")
@@ -39,10 +39,10 @@ keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k", {desc = "switch from terminal"})
 keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", {desc = "switch from terminal"})
 
 -- git
-keymap.set("n", "<leader>gs", builtin.git_status)
-keymap.set("n", "<leader>gb", ":Git blame<CR>")
-keymap.set("n", "<leader>gt", ":Git difftool<CR>")
-keymap.set("n", "<leader>gd", ":Gvdiffsplit<CR>")
+-- keymap.set("n", "<leader>gs", builtin.git_status)
+-- keymap.set("n", "<leader>gb", ":Git blame<CR>")
+-- keymap.set("n", "<leader>gt", ":Git difftool<CR>")
+-- keymap.set("n", "<leader>gd", ":Gvdiffsplit<CR>")
 
 -- search
 keymap.set("n", "<leader>ff", builtin.find_files)

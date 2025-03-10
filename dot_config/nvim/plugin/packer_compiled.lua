@@ -264,11 +264,6 @@ _G.packer_plugins = {
     path = "/Users/kurthsu/.local/share/nvim/site/pack/packer/start/vim-dadbod-ui",
     url = "https://github.com/kristijanhusak/vim-dadbod-ui"
   },
-  ["vim-fugitive"] = {
-    loaded = true,
-    path = "/Users/kurthsu/.local/share/nvim/site/pack/packer/start/vim-fugitive",
-    url = "https://github.com/tpope/vim-fugitive"
-  },
   ["vim-maximizer"] = {
     loaded = true,
     path = "/Users/kurthsu/.local/share/nvim/site/pack/packer/start/vim-maximizer",

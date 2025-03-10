@@ -49,7 +49,8 @@ return packer.startup(function(use)
   })
   use {"akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons"}
   use("lewis6991/gitsigns.nvim") -- git plugin
-  use("tpope/vim-fugitive") -- git plugin
+  -- use("tpope/vim-fugitive") -- git plugin
+  -- use("sindrets/diffview.nvim") -- git diff view tool
   use("mg979/vim-visual-multi") -- ctrl n 跟 vscode crtl d 一樣效果
   -- use("vim-ruby/vim-ruby") -- 基本的 ruby 檔案一些指令, 但都沒有效果, 需研究
   use("tpope/vim-rails") -- 有:A, gf 等指令可以用
