@@ -179,11 +179,6 @@ _G.packer_plugins = {
     path = "/Users/kurthsu/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
   },
-  neoterm = {
-    loaded = true,
-    path = "/Users/kurthsu/.local/share/nvim/site/pack/packer/start/neoterm",
-    url = "https://github.com/kassio/neoterm"
-  },
   neotest = {
     loaded = true,
     path = "/Users/kurthsu/.local/share/nvim/site/pack/packer/start/neotest",

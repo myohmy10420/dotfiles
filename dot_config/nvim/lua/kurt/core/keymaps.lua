@@ -23,7 +23,7 @@ keymap.set("c", "<C-k>", "<Up>")
 keymap.set("c", "<C-l>", "<Right>")
 
 keymap.set("n", "<leader>e", ":e<space>")
-keymap.set("n", "<leader>cc", ":")
+keymap.set("n", "<leader>c", ":")
 keymap.set("n", "<leader>d", ":bd<CR>")
 keymap.set("n", "<leader>ww", ":w<CR>")
 keymap.set("n", "<leader>q", ":q<CR>")
@@ -40,9 +40,9 @@ keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", {desc = "switch from terminal"})
 
 -- git
 -- keymap.set("n", "<leader>gs", builtin.git_status)
--- keymap.set("n", "<leader>gb", ":Git blame<CR>")
--- keymap.set("n", "<leader>gt", ":Git difftool<CR>")
--- keymap.set("n", "<leader>gd", ":Gvdiffsplit<CR>")
+keymap.set("n", "<leader>gb", "<cmd>Gitsigns blame<CR>")
+keymap.set("n", "<leader>gl", "<cmd>Gitsigns blame_line<CR>")
+keymap.set("n", "<leader>gd", "<cmd>lua require('gitsigns').diffthis(nil, {vertical = true, split = 'botright'})<CR>")
 
 -- search
 keymap.set("n", "<leader>ff", builtin.find_files)

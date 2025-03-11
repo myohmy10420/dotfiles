@@ -54,7 +54,7 @@ return packer.startup(function(use)
   use("mg979/vim-visual-multi") -- ctrl n 跟 vscode crtl d 一樣效果
   -- use("vim-ruby/vim-ruby") -- 基本的 ruby 檔案一些指令, 但都沒有效果, 需研究
   use("tpope/vim-rails") -- 有:A, gf 等指令可以用
-  use("kassio/neoterm") -- quick open new terminal, 目前只用來搭配 vim-rspec
+  -- use("kassio/neoterm") -- quick open new terminal, 目前只用來搭配 vim-rspec
   use({
     "nvim-neotest/neotest",
     requires = {
