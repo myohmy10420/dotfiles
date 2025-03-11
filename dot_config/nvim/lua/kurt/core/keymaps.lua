@@ -22,11 +22,11 @@ keymap.set("c", "<C-j>", "<Down>")
 keymap.set("c", "<C-k>", "<Up>")
 keymap.set("c", "<C-l>", "<Right>")
 
-keymap.set("n", "<leader>e", ":e<space>")
-keymap.set("n", "<leader>c", ":")
-keymap.set("n", "<leader>d", ":bd<CR>")
-keymap.set("n", "<leader>ww", ":w<CR>")
-keymap.set("n", "<leader>q", ":q<CR>")
+keymap.set("n", "<leader>e", "<cmd>e<space>")
+keymap.set("n", "<leader>c", "<cmd>")
+keymap.set("n", "<leader>d", "<cmd>bd<CR>")
+keymap.set("n", "<leader>ww", "<cmd>w<CR>")
+keymap.set("n", "<leader>q", "<cmd>q<CR>")
 
 keymap.set("n", "<leader>n", "<cmd>NvimTreeToggle<CR>", {desc = "toggle nvim-tree"})
 
@@ -60,6 +60,7 @@ keymap.set("v", "<leader>sw", "<esc><cmd>lua require('spectre').open_visual()<CR
 keymap.set("n", "<leader>sf", "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>", { desc = "Search on current file" })
 
 -- test
+keymap.set("n", "<leader>tt", "<cmd>A<CR>") -- only for rails
 keymap.set("n", "<leader>tj", function()
   require("neotest").run.run()
 end, { desc = "Run nearest test" })
@@ -85,18 +86,18 @@ end, { desc = "Open test result output" })
 -- end, { desc = "Toggle test summary" })
 
 -- DB UI
-keymap.set("n", "<leader>du", ":DBUIToggle<CR>", { desc = "Toggle Dadbod UI" })
--- keymap.set("n", "<leader>df", ":DBUIFindBuffer<CR>", { desc = "Find existing DBUI buffer" })
--- keymap.set("n", "<leader>dr", ":DBUIRenameBuffer<CR>", { desc = "Rename DBUI buffer" })
-keymap.set("n", "<leader>dl", ":DBUILastQueryInfo<CR>", { desc = "Show last query info" })
+keymap.set("n", "<leader>du", "<cmd>DBUIToggle<CR>", { desc = "Toggle Dadbod UI" })
+-- keymap.set("n", "<leader>df", "<cmd>DBUIFindBuffer<CR>", { desc = "Find existing DBUI buffer" })
+-- keymap.set("n", "<leader>dr", "<cmd>DBUIRenameBuffer<CR>", { desc = "Rename DBUI buffer" })
+keymap.set("n", "<leader>dl", "<cmd>DBUILastQueryInfo<CR>", { desc = "Show last query info" })
 
 -- marks
 keymap.set("n", "<leader>mf", builtin.marks)
-keymap.set("n", "<leader>md", ":delmarks a-zA-Z0-9<CR>")
+keymap.set("n", "<leader>md", "<cmd>delmarks a-zA-Z0-9<CR>")
 local marks = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
 
 for i, mark in ipairs(marks) do
-  keymap.set("n", "<leader>mm" .. string.char(96 + i), ":mark " .. mark .. "<CR>", { noremap = true, silent = true })
+  keymap.set("n", "<leader>mm" .. string.char(96 + i), "<cmd>mark " .. mark .. "<CR>", { noremap = true, silent = true })
 end
 
 for i, mark in ipairs(marks) do
@@ -104,8 +105,8 @@ for i, mark in ipairs(marks) do
 end
 
 for i = 0, 9 do
-  keymap.set("n", "<leader>mm" .. i, ":mark " .. i .. "<CR>", { noremap = true, silent = true })
-  keymap.set("n", "m" .. i, ":'" .. i .. "<CR>", { noremap = true, silent = true })
+  keymap.set("n", "<leader>mm" .. i, "<cmd>mark " .. i .. "<CR>", { noremap = true, silent = true })
+  keymap.set("n", "m" .. i, "<cmd>'" .. i .. "<CR>", { noremap = true, silent = true })
 end
 
 -- split buffers
