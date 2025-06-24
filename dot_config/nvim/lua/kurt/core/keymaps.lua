@@ -2,6 +2,8 @@ vim.g.mapleader = ","
 
 local keymap = vim.keymap -- for conciseness
 local builtin = require("telescope.builtin")
+local gitsigns = require("gitsigns")
+
 
 -- unbind
 keymap.set("n", "K", "<nop>")
@@ -24,7 +26,8 @@ keymap.set("c", "<C-l>", "<Right>")
 
 keymap.set("n", "<leader>e", ":e<space>")
 keymap.set("n", "<leader>c", ":")
-keymap.set("n", "<leader>d", "<cmd>bd<CR>")
+keymap.set("n", "<leader>dj", "<cmd>bd<CR>")
+keymap.set("n", "<leader>dd", "<cmd>bd!<CR>")
 keymap.set("n", "<leader>ww", "<cmd>w<CR>")
 keymap.set("n", "<leader>q", "<cmd>q<CR>")
 
@@ -39,9 +42,60 @@ keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k", {desc = "switch from terminal"})
 keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", {desc = "switch from terminal"})
 
 -- git
--- keymap.set("n", "<leader>gs", builtin.git_status)
-keymap.set("n", "<leader>gb", "<cmd>Gitsigns blame<CR>")
-keymap.set("n", "<leader>gl", "<cmd>Gitsigns blame_line<CR>")
+keymap.set("n", "<leader>gs", builtin.git_status)
+keymap.set("n", "<leader>gb", "<cmd>Git blame<CR>")
+-- keymap.set("v", "<leader>ga", "<cmd>Gitsigns stage_hunk<CR>")
+-- keymap.set("n", "<leader>ga", "V<cmd>Gitsigns stage_hunk<CR>")
+
+-- keymap.set("n", "<leader>ga", function()
+--   local lnum = vim.fn.line(".")
+--
+--   gitsigns.stage_hunk({ lnum, lnum })
+-- end, { desc = "Stage current line" })
+--
+-- keymap.set("v", "<leader>ga", function()
+--   local start_line = vim.fn.line("v")
+--   local end_line = vim.fn.line(".")
+--   if start_line > end_line then
+--     start_line, end_line = end_line, start_line
+--   end
+--   gitsigns.stage_hunk({ start_line, end_line })
+-- end, { desc = "Stage selected lines" })
+
+
+-- 單行 stage
+keymap.set("n", "<leader>ga", function()
+  local lnum = vim.fn.line(".")
+
+  gitsigns.stage_hunk({ lnum, lnum })
+end, { desc = "Git stage current line" })
+
+-- 單行 reset
+keymap.set("n", "<leader>gr", function()
+  local line = vim.fn.line(".")
+  gitsigns.reset_hunk({ line, line })
+end, { desc = "Git reset current line" })
+
+-- 視覺選取 stage
+keymap.set("v", "<leader>ga", function()
+  local start_line = vim.fn.line("v")
+  local end_line = vim.fn.line(".")
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+  gitsigns.stage_hunk({ start_line, end_line })
+end, { desc = "Git stage selected lines" })
+
+-- 視覺選取 reset
+keymap.set("v", "<leader>gr", function()
+  local start_line = vim.fn.line("v")
+  local end_line = vim.fn.line(".")
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+  gitsigns.reset_hunk({ start_line, end_line })
+end, { desc = "Git reset selected lines" })
+
 keymap.set("n", "<leader>gd", "<cmd>lua require('gitsigns').diffthis(nil, {vertical = true, split = 'botright'})<CR>")
 
 -- search
