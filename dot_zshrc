@@ -11,7 +11,8 @@ DEFAULT_USER="Kurt"
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.git.zsh
 source ~/.config/bito.zsh
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.config/api_key.zsh
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 alias c='clear'
 alias x='exit'
@@ -23,22 +24,41 @@ tt() {
   tmux attach -t $(whoami);
 }
 
+ts() {
+  if ! tmux has-session -t servers 2> /dev/null; then
+    tmux new -s servers -d;
+  fi
+  tmux attach -t servers;
+}
+
+tw() {
+  if ! tmux has-session -t dev 2> /dev/null; then
+    tmux new -s dev -d;
+  fi
+  tmux attach -t dev;
+}
+
+alias 'mongod-start'='brew services start mongodb-community'
+alias 'mongod-stop'='brew services stop mongodb-community'
+alias 'mongod-restart'='brew services restart mongodb-community'
+
 export EDITOR='nvim'
 alias vi='nvim'
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+# enable frum
+# eval "$(frum init)"
 
-# export PATH="/usr/local/opt/node@16/bin:$PATH"
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+# [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 alias pr='puma-dev -install -d test'
-export PATH="/usr/local/opt/node@14/bin:$PATH"
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH="/usr/local/opt/mysql@8.4/bin:$PATH"
+# export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
-export PATH="/usr/local/opt/node@14/bin:$PATH"
+# . /usr/local/opt/asdf/libexec/asdf.sh
+eval "$(rbenv init -)"
+export PATH="/usr/local/opt/openjdk/bin:$PATH"

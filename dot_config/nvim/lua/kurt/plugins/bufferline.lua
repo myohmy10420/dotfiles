@@ -3,6 +3,7 @@ if not setup then
   return
 end
 
+vim.opt.termguicolors = true
 bufferline.setup({
   options = {
     -- 使用 nvim 内置lsp

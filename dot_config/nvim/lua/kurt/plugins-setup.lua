@@ -1,89 +1,149 @@
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
   end
-  return false
 end
 
-local packer_bootstrap = ensure_packer() -- true if packer was just install
+vim.opt.rtp:prepend(lazypath)
 
--- Autocommand that reloads nvim whenever save this file
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins-setup.lua source <afile> | PackerSync
-  augroup end
-]])
+-- Make sure to setup `mapleader` and `maplocalleader` before
+-- loading lazy.nvim so that mappings are correct.
+-- This is also a good place to setup other settings (vim.opt)
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
-local status, packer = pcall(require, "packer")
-if not status then
-  return
-end
+-- Setup lazy.nvim
+require("lazy").setup({
+  -- spec = {
+  --   -- import your plugins
+  --   { import = "plugins" },
+  -- },
+  -- Configure any other settings here. See the documentation for more details.
+  -- colorscheme that will be used when installing plugins.
+  -- install = { colorscheme = { "habamax" } },
+  -- automatically check for plugin updates
+  checker = { enabled = true },
+  -- 顏色主題
+  { "morhetz/gruvbox" },
 
-return packer.startup(function(use)
-  use("wbthomason/packer.nvim")
-  -- lua functions that many plugins to use
-  -- telescope require, 載入後 telescope 可以預覽檔案
-  use("nvim-lua/plenary.nvim")
+  -- Tmux + Vim 整合
+  { "christoomey/vim-tmux-navigator" },
 
-  use("morhetz/gruvbox") --perferred colorscheme
-  use("christoomey/vim-tmux-navigator") -- 搭配 .tmux.conf 支援 vim switch to other tmux window
-  use("szw/vim-maximizer") -- vim-maximizer & restores current window
-  use("tpope/vim-surround") -- c = change, d = delete, y = add, 後面 + s(surround) 開始使用
-  use("numToStr/Comment.nvim") -- gc = comment
-  use("nvim-tree/nvim-tree.lua") -- file explorer
-  use("nvim-lualine/lualine.nvim") -- nvim 也有 statusline
-  use("nvim-telescope/telescope.nvim") -- fuzzy finding
-  use({"akinsho/bufferline.nvim", tag = "v3.*", requires = "nvim-tree/nvim-web-devicons"})
-  use("lewis6991/gitsigns.nvim") -- git plugin
-  use("tpope/vim-fugitive") -- git plugin
-  use("mg979/vim-visual-multi") -- ctrl n 跟 vscode crtl d 一樣效果
-  -- use("vim-ruby/vim-ruby") -- 基本的 ruby 檔案一些指令, 但都沒有效果, 需研究
-  use("tpope/vim-rails") -- 有:A, gf 等指令可以用
-  use("kassio/neoterm") -- quick open new terminal, 目前只用來搭配 vim-rspec
-  use("thoughtbot/vim-rspec") -- rspec plugin
-  use("simeji/winresizer") -- window quick resize
+  -- 視窗放大
+  { "szw/vim-maximizer" },
 
-  -- autocompletion
-  use("hrsh7th/nvim-cmp") -- Autocompletion plugin
-  use("hrsh7th/cmp-buffer") -- source for buffer words
-  use("hrsh7th/cmp-path") -- source for filesystem paths
-  use("hrsh7th/cmp-cmdline") -- source for command line
+  -- text objects
+  { "tpope/vim-surround" },
 
-  -- autocompletion - snippets
-  use("L3MON4D3/LuaSnip") -- Snippets plugin
-  use("saadparwaiz1/cmp_luasnip")  -- Snippets source for nvim-cmp
-  use("rafamadriz/friendly-snippets")
+  -- comment toggle
+  { "numToStr/Comment.nvim", config = true },
 
-  -- managing & installing lsp server
-  use("williamboman/mason.nvim")
-  use("williamboman/mason-lspconfig.nvim")
+  -- file explorer
+  { "nvim-tree/nvim-tree.lua" },
 
-  -- configuring lsp servers
-  use("neovim/nvim-lspconfig") -- Collection of configurations for built-in LSP client
-  use("hrsh7th/cmp-nvim-lsp")  -- LSP source for nvim-cmp
-  use({"glepnir/lspsaga.nvim", branch = "main" })
-  use("onsails/lspkind.nvim")
+  -- status line
+  { "nvim-lualine/lualine.nvim" },
 
-  -- solargraph 官網說要安裝 languageclient-neovim
-  -- use({"autozimu/languageclient-neovim", branch = "next", run = "bash install.sh"})
-  -- cd ~/.local/share/nvim/site/pack/packer/start/languageclient-neovim 自己跑 bash install.sh ，不然會 timeout
-  use({"autozimu/languageclient-neovim", branch = "next"})
+  -- fuzzy finder
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" }
+  },
 
-  -- treesitter configuration
-  use({
-    "nvim-treesitter/nvim-treesitter",
-    run = function()
-      local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
-      ts_update()
-    end,
-  })
+  -- search and replace
+  {
+    "nvim-pack/nvim-spectre",
+    dependencies = { "nvim-lua/plenary.nvim" }
+  },
 
-  if packer_bootstrap then
-    require('packer').sync()
-  end
-end)
+  -- bufferline
+  {
+    "akinsho/bufferline.nvim",
+    version = "*",
+    dependencies = { "nvim-tree/nvim-web-devicons" }
+  },
+
+  -- git
+  { "lewis6991/gitsigns.nvim" },
+  { "tpope/vim-fugitive" },
+
+  -- multi cursor
+  { "mg979/vim-visual-multi" },
+
+  -- ruby on rails
+  { "tpope/vim-rails" },
+
+  -- neotest
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-neotest/nvim-nio",
+      "olimorris/neotest-rspec",
+    }
+  },
+
+  -- window resizer
+  { "simeji/winresizer" },
+
+  -- auto completion
+  { "hrsh7th/nvim-cmp" },
+  { "hrsh7th/cmp-buffer" },
+  { "hrsh7th/cmp-path" },
+  { "hrsh7th/cmp-cmdline" },
+
+  -- snippets
+  { "L3MON4D3/LuaSnip" },
+  { "saadparwaiz1/cmp_luasnip" },
+  { "rafamadriz/friendly-snippets" },
+
+  -- lsp config only (mason 已移除)
+  { "neovim/nvim-lspconfig" },
+  { "hrsh7th/cmp-nvim-lsp" },
+  { "onsails/lspkind.nvim" },
+
+  -- DB
+  {
+    "tpope/vim-dadbod",
+    dependencies = { "kristijanhusak/vim-dadbod-ui" }
+  },
+
+  -- treesitter
+  { "nvim-treesitter/nvim-treesitter" },
+
+  -- Avante
+  {
+    "yetone/avante.nvim",
+    branch = "main",
+    build = "make",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-lua/plenary.nvim",
+      "stevearc/dressing.nvim",
+      "MunifTanjim/nui.nvim",
+      "MeanderingProgrammer/render-markdown.nvim",
+    }
+  },
+
+  -- Copilot (用新的 Lua 版本)
+  {
+    "zbirenbaum/copilot.lua",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({})
+    end
+  }
+})
+
