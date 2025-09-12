@@ -11,7 +11,8 @@ DEFAULT_USER="Kurt"
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.git.zsh
 source ~/.config/bito.zsh
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.config/api_key.zsh
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 alias c='clear'
 alias x='exit'
@@ -37,6 +38,10 @@ tw() {
   tmux attach -t dev;
 }
 
+alias 'mongod-start'='brew services start mongodb-community'
+alias 'mongod-stop'='brew services stop mongodb-community'
+alias 'mongod-restart'='brew services restart mongodb-community'
+
 export EDITOR='nvim'
 alias vi='nvim'
 
@@ -50,8 +55,10 @@ alias vi='nvim'
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 alias pr='puma-dev -install -d test'
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH="/usr/local/opt/mysql@8.4/bin:$PATH"
+# export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
 # . /usr/local/opt/asdf/libexec/asdf.sh
 eval "$(rbenv init -)"
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
