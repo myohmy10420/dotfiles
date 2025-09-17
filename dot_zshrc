@@ -18,7 +18,7 @@ alias c='clear'
 alias x='exit'
 
 tt() {
-  if ! tmux has-session -t work 2> /dev/null; then
+  if ! tmux has-session -t dev 2> /dev/null; then
     tmux new -s $(whoami) -d;
   fi
   tmux attach -t $(whoami);
@@ -31,11 +31,27 @@ ts() {
   tmux attach -t servers;
 }
 
-tw() {
-  if ! tmux has-session -t dev 2> /dev/null; then
-    tmux new -s dev -d;
+vf() {
+  local file
+  if [[ $# -eq 0 ]]; then
+    # 沒參數時搜尋所有檔案
+    file=$(fd -t f | fzf --height 80% --reverse --border --preview 'bat --color=always --line-range :100 {}')
+  else
+    # 有參數時傳給 fd
+    file=$(fd "$@" | fzf --height 80% --reverse --border --preview 'bat --color=always --line-range :100 {}')
   fi
-  tmux attach -t dev;
+
+  [[ -n "$file" ]] && nvim "$file"
+}
+
+vs() {
+  local file
+  files=$(git status --porcelain | cut -c4- | fzf -m --height 80% --reverse --border --preview 'git diff --color=always {} 2>/dev/null || bat --color=always --line-range :500 {}')
+
+  if [[ -n "$files" ]]; then
+    # 將多行轉換為陣列並傳給 nvim
+    echo "$files" | xargs nvim
+  fi
 }
 
 alias 'mongod-start'='brew services start mongodb-community'
@@ -44,13 +60,9 @@ alias 'mongod-restart'='brew services restart mongodb-community'
 
 export EDITOR='nvim'
 alias vi='nvim'
-
-# enable frum
-# eval "$(frum init)"
-
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-# [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+alias ll='eza -la'
+alias la='eza -a'
+alias lt='eza --tree'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
