@@ -46,3 +46,5 @@ opt.foldenable = false -- 開檔案是不要自動 folding
 -- 一下兩行開啟 folding 設定
 opt.foldmethod = 'expr'
 opt.foldexpr = 'nvim_treesitter#foldexpr()'
+
+opt.scrolloff = 12 -- 保持游標周圍有 8 行

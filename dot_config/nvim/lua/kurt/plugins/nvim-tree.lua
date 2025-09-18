@@ -3,37 +3,37 @@ if not setup then
   return
 end
 
-local function avante_add_files()
-  local api = require("nvim-tree.api")
-
-  -- 獲取目前游標所在的檔案節點
-  local node = api.tree.get_node_under_cursor()
-  if not node then
-    print("No file selected")
-    return
-  end
-
-  local filepath = node.absolute_path
-  print("Selected file:", filepath) -- Debugging purpose
-
-  -- 這裡可以加入您的 Avante 相關邏輯
-  local relative_path = require("avante.utils").relative_path(filepath)
-  local sidebar = require("avante").get()
-
-  local open = sidebar:is_open()
-  -- 確保 Avante 側邊欄已打開
-  if not open then
-    require("avante.api").ask()
-    sidebar = require("avante").get()
-  end
-
-  sidebar.file_selector:add_selected_file(relative_path)
-
-  -- 如果之前未開啟 Avante 側邊欄，則關閉
-  if not open then
-    sidebar.file_selector:remove_selected_file("nvim-tree")
-  end
-end
+-- local function avante_add_files()
+--   local api = require("nvim-tree.api")
+--
+--   -- 獲取目前游標所在的檔案節點
+--   local node = api.tree.get_node_under_cursor()
+--   if not node then
+--     print("No file selected")
+--     return
+--   end
+--
+--   local filepath = node.absolute_path
+--   print("Selected file:", filepath) -- Debugging purpose
+--
+--   -- 這裡可以加入您的 Avante 相關邏輯
+--   local relative_path = require("avante.utils").relative_path(filepath)
+--   local sidebar = require("avante").get()
+--
+--   local open = sidebar:is_open()
+--   -- 確保 Avante 側邊欄已打開
+--   if not open then
+--     require("avante.api").ask()
+--     sidebar = require("avante").get()
+--   end
+--
+--   sidebar.file_selector:add_selected_file(relative_path)
+--
+--   -- 如果之前未開啟 Avante 側邊欄，則關閉
+--   if not open then
+--     sidebar.file_selector:remove_selected_file("nvim-tree")
+--   end
+-- end
 
 local function my_on_attach(bufnr)
   local api = require("nvim-tree.api")
@@ -45,8 +45,8 @@ local function my_on_attach(bufnr)
   -- 載入預設快捷鍵
   api.config.mappings.default_on_attach(bufnr)
 
-  -- 設定自訂義快捷鍵
-  vim.keymap.set("n", "oa", avante_add_files, opts("Avante Add Files"))
+  -- 設定自訂義快捷鍵 (avante 已移除)
+  -- vim.keymap.set("n", "oa", avante_add_files, opts("Avante Add Files"))
 end
 
 

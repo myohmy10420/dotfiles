@@ -33,6 +33,22 @@ require("lazy").setup({
   -- install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
+  
+  -- 效能優化
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "matchit", 
+        "matchparen",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin"
+      },
+    },
+  },
   -- 顏色主題
   { "morhetz/gruvbox" },
 
@@ -40,16 +56,22 @@ require("lazy").setup({
   { "christoomey/vim-tmux-navigator" },
 
   -- 視窗放大
-  { "szw/vim-maximizer" },
+  -- { "szw/vim-maximizer" },
 
   -- text objects
-  { "tpope/vim-surround" },
+  -- { "tpope/vim-surround" },
 
   -- comment toggle
   { "numToStr/Comment.nvim", config = true },
 
   -- file explorer
-  { "nvim-tree/nvim-tree.lua" },
+  {
+    "nvim-tree/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFocus" },
+    keys = {
+      { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle file explorer" },
+    },
+  },
 
   -- status line
   { "nvim-lualine/lualine.nvim" },
@@ -83,9 +105,13 @@ require("lazy").setup({
   -- ruby on rails
   { "tpope/vim-rails" },
 
-  -- neotest
+  -- neotest (延遲載入)
   {
     "nvim-neotest/neotest",
+    cmd = { "Neotest" },
+    keys = {
+      { "<leader>t", desc = "Test" },
+    },
     dependencies = {
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
@@ -109,10 +135,19 @@ require("lazy").setup({
   { "saadparwaiz1/cmp_luasnip" },
   { "rafamadriz/friendly-snippets" },
 
-  -- lsp config only (mason 已移除)
-  { "neovim/nvim-lspconfig" },
-  { "hrsh7th/cmp-nvim-lsp" },
-  { "onsails/lspkind.nvim" },
+  -- lsp config only (mason 已移除，延遲載入)
+  {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+  },
+  {
+    "hrsh7th/cmp-nvim-lsp",
+    event = "InsertEnter",
+  },
+  {
+    "onsails/lspkind.nvim",
+    event = "InsertEnter",
+  },
 
   -- DB
   {
@@ -120,22 +155,26 @@ require("lazy").setup({
     dependencies = { "kristijanhusak/vim-dadbod-ui" }
   },
 
-  -- treesitter
-  { "nvim-treesitter/nvim-treesitter" },
+  -- treesitter (延遲載入)
+  {
+    "nvim-treesitter/nvim-treesitter",
+    event = { "BufReadPost", "BufNewFile" },
+    build = ":TSUpdate",
+  },
 
   -- Avante
-  {
-    "yetone/avante.nvim",
-    branch = "main",
-    build = "make",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-lua/plenary.nvim",
-      "stevearc/dressing.nvim",
-      "MunifTanjim/nui.nvim",
-      "MeanderingProgrammer/render-markdown.nvim",
-    }
-  },
+  -- {
+  --   "yetone/avante.nvim",
+  --   branch = "main",
+  --   build = "make",
+  --   dependencies = {
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "nvim-lua/plenary.nvim",
+  --     "stevearc/dressing.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --     "MeanderingProgrammer/render-markdown.nvim",
+  --   }
+  -- },
 
   -- Copilot (用新的 Lua 版本)
   {

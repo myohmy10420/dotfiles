@@ -31,6 +31,6 @@ treesitter.setup({
     "dockerfile",
     "gitignore",
   },
-  -- auto install above language parsers
-  auto_install = true,
+  -- auto install above language parsers (關閉以提升啟動速度)
+  auto_install = false,
 })
