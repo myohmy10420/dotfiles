@@ -31,8 +31,6 @@ keymap.set("n", "<leader>dd", "<cmd>bd!<CR>")
 keymap.set("n", "<leader>ww", "<cmd>w<CR>")
 keymap.set("n", "<leader>q", "<cmd>q<CR>")
 
-keymap.set("n", "<leader>n", "<cmd>NvimTreeToggle<CR>", {desc = "toggle nvim-tree"})
-
 keymap.set("n", "<Tab>", "<cmd>BufferLineCycleNext<CR>")
 keymap.set("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<CR>")
 

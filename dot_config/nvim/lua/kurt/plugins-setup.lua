@@ -69,7 +69,7 @@ require("lazy").setup({
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFocus" },
     keys = {
-      { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle file explorer" },
+      { "<leader>n", "<cmd>NvimTreeToggle<cr>", desc = "Toggle file explorer" },
     },
   },
 
