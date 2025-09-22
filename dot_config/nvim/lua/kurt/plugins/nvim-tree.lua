@@ -82,6 +82,7 @@ nvimtree.setup({
   },
   git = {
     ignore = false,
+    timeout = 5000,
   },
   on_attach = my_on_attach,
 })
