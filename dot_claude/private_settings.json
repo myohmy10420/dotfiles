@@ -1,0 +1,35 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/local/bin/terminal-notifier -title \"Claude Code\" -message \"任務執行完畢！\" -sound Blow"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/local/bin/terminal-notifier -title \"Claude Code\" -message \"任務執行完畢！\" -sound Blow"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "ruby-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": false,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  }
+}
