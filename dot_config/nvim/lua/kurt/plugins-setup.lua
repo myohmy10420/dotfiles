@@ -124,31 +124,6 @@ require("lazy").setup({
   -- window resizer
   { "simeji/winresizer" },
 
-  -- auto completion
-  { "hrsh7th/nvim-cmp" },
-  { "hrsh7th/cmp-buffer" },
-  { "hrsh7th/cmp-path" },
-  { "hrsh7th/cmp-cmdline" },
-
-  -- snippets
-  { "L3MON4D3/LuaSnip" },
-  { "saadparwaiz1/cmp_luasnip" },
-  { "rafamadriz/friendly-snippets" },
-
-  -- lsp config only (mason 已移除，延遲載入)
-  {
-    "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
-  },
-  {
-    "hrsh7th/cmp-nvim-lsp",
-    event = "InsertEnter",
-  },
-  {
-    "onsails/lspkind.nvim",
-    event = "InsertEnter",
-  },
-
   -- DB
   {
     "tpope/vim-dadbod",
